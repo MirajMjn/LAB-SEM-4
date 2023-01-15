@@ -1,0 +1,44 @@
+Algorithm
+
+<1> declare and initialize necessary variables
+
+    tos =-1; top of stack
+    MAXSIZE : a const for maximum size of the stack
+    stack[]; an array variable with size MAXSIZE
+
+<2> For PUSH () operation
+    if tos == MAXSIZE
+        print stack full
+
+    else
+        increase tos
+        read data from use to be pushed
+        place data at top of stack
+
+<3> For POP () operation
+    if tos == initial value
+        print stack is empty
+
+    else
+        POP data -> decrease tos -> display popped data.
+
+<4> For PEEK () operation
+    if tos == initial value
+        print stack is empty
+
+    else
+        Peek data from top of stack.
+
+<5> For DISPLAY () operation
+    if tos == initial value
+        print stack is empty
+
+    else
+        print all i^th data of stack.
+
+<6> STACK OPERATION
+-> push()
+-> pop()
+-> peek()
+-> isEmpty()
+-> isFull()
