@@ -1,3 +1,4 @@
+//Simpsons 3/8 Rule.
 #include <stdio.h>
 #include <conio.h>
 #include <stdlib.h>
