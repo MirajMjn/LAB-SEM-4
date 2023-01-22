@@ -19,8 +19,6 @@ struct node *ptr = NULL;
 struct node *temp = NULL;
 struct node *newNode;
 
-
-
 int main()
 {
     char choice, position_char;
