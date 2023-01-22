@@ -160,7 +160,10 @@ void delete(int pos)
         case 1:
             temp = head;
             head = head->next_data;
-            head->prev_data = NULL; //making the new first element point to null.
+            if(head != NULL)
+            {
+                head->prev_data = NULL; //making the new first element point to null.
+            }
             free(temp);
         break;
 

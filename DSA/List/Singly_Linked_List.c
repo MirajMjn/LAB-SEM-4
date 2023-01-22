@@ -173,6 +173,16 @@ void delete(int pos)
             system("cls");
             printf("\nDelete position : ");
             scanf("%d", &position);
+            if (position < 1)
+            {
+                printf("\nPosition begins at 1.");
+                break;
+            }
+            if (position == 1)
+            {
+                delete (1);
+                break;
+            }
             ptr = head;
             while(i < position)
             {
