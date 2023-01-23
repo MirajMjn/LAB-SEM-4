@@ -31,10 +31,9 @@ int main()
 {
     int n;
 
-    printf("\nTo display nth term of Fibonnaci Series, n = ? : ");
+    printf("\nTo display n terms of Fibonnaci Series, n = ? : ");
     scanf("%d", &n);
 
-    //printf("\n%dth term of Fibonacci series = %d", n, fibo(n));
     printfibo(n);
 
     return 0;
