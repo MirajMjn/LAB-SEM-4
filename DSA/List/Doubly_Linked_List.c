@@ -27,11 +27,12 @@ int main()
     while (loop == 1)
     {
         system("cls");
-        printf("\n1 -> insert. \n2 -> delete. \n3 -> display. \nESC -> Exit.");
+        printf("\n1 -> insert. \n2 -> delete. \n3 -> display. \n4 -> Exit.");
         choice = getch();
         switch (choice)
         {
-            case 27:
+            //case 27:
+            case '4':
                 exit(13);
             break;
 
