@@ -3,7 +3,7 @@
 
 float f(float x, float y){ return (1 + 3 * x * x); }
 
-float Heun(float x, float y, float h, float xp)
+float RK4(float x, float y, float h, float xp)
 {
     int n, i;
     float m1, m2, m3, m4;
@@ -39,7 +39,7 @@ int main()
     printf("\nEnter for what value of x, y(x) is to be calculated (xp) : ");
     scanf("%f", &xp);
 
-    yp = Heun(x, y, h, xp);
+    yp = RK4(x, y, h, xp);
 
     printf("\ny(%.4f) = %.4f", xp, yp);
 
