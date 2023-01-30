@@ -1,3 +1,6 @@
+//to calculate and print the Fibonnaci Series
+//upto n terms with first term being 0.
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>

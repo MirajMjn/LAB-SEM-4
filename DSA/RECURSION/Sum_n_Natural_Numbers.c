@@ -1,3 +1,5 @@
+//to find sum of n natural numbers using recursion.
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
