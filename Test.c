@@ -1,230 +1,136 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<stdbool.h>
+#include <stdio.h>
+#include <graphics.h>
+#include <conio.h>
 
-typedef struct nodex
-{
-	int info;
-	struct nodex* prev;
-	struct nodex* next;
-}node;
+#define RADIUS 10
+static const int startx = 20;
+static const int starty = 20;
+static const int endx = 420;
+static const int endy = 420;
+static const int unit_cell = 100;
 
-node* head = NULL;
+void maze(){
+	int x = 0, y = 0, i = 0;
+	//node coodinates of the maze in order (x, y)
+	int node[] = {20, 20, 120, 20, 120, 120, 20, 120, 120, 120, 120, 220, 20, 220, 20, 320, 20, 220, 120, 220, 120, 320, 220, 320, 120, 320, 120, 420, 120, 220, 220, 220, 220, 120, 220, 220, 420, 220, 420, 320, 320, 320, 420, 320, 420, 420};
+	//making the maze border
+	setcolor(RED);
+	setlinestyle(3, 0, 3);
+	rectangle(20 - 10, 20 - 10, 420 + 10, 420 + 10); // encloses a square of dimension 400 x 400
 
-void ins_b()
-{
-	int data;
-	printf("Enter data: ");
-	scanf("%d", &data);
-
-	node* newNode = (node*) malloc(sizeof(node));
-	newNode -> info = data;
-	newNode -> next = newNode -> prev = NULL;
-	if(head == NULL)
+	//making maze path
+	setcolor(LIGHTGRAY); // code : 7
+	moveto(20, 20);
+	while(x!=420 || y!=420)
 	{
-		head = newNode;
-		return;
-	}
-	else
-	{
-		newNode -> next = head;
-		head -> prev = newNode;
-		head = newNode;
+		x = node[i];
+		i++;
+		y = node[i];
+		i++;
+		setlinestyle(0, 0, 1);
+		lineto(x, y);
 	}
 }
 
+int bot_color(int x, int y){
 
-void ins_e()
-{
-	int data;
-	printf("Enter data: ");
-	scanf("%d", &data);
-	node* newNode = (node *) malloc(sizeof(node));
-	newNode -> info = data;
-	newNode -> prev = newNode -> next = NULL;
-	if(head == NULL)
-	{
-		head = newNode;
-		return;
+	int status;
+	circle(x, y, RADIUS);
+
+	if(x == startx && y == starty){
+		setfillstyle(SOLID_FILL, YELLOW);
+		status = 1; // start
 	}
-	else
-	{
-		node* ptr;
-		ptr = head;
-		while(ptr -> next != NULL)
+	else if(x == endx && y == endy){
+		setfillstyle(SOLID_FILL, LIGHTGREEN);
+		status = 2; // end
+	}
+	else if(x > endx || y > endy || x < startx || y < starty){
+		setfillstyle(SOLID_FILL, RED);
+		status = 13; // out of bounds
+	}
+	else{
+		setfillstyle(SOLID_FILL, DARKGRAY);
+		status = 0; // on maze
+	}
+	floodfill(x+1, y+1, LIGHTGRAY);
+	return status;
+}
+
+int refresh(int x, int y){
+	int status;
+
+	cleardevice();
+
+	status = bot_color(x, y);
+
+	maze();
+
+	delay(30);
+
+	return status;
+}
+
+void left_wall_algorithm(){
+	int find = 1;
+	int wait_for_key = 1;
+	char key;
+	int status;
+	int x = startx;
+	int y = starty;
+	int maze_color = getpixel(x, y);
+
+	refresh(x, y);
+
+	while (wait_for_key == 1) {
+		key = getch();
+		switch(key)
 		{
-			ptr = ptr -> next;
-		}
-		ptr -> next = newNode;
-		newNode -> prev = ptr;
-	}
-}
-
-
-
-void ins_pos()
-{
-	int i;
-	int pos;
-	int data;
-	printf("Enter data: ");
-	scanf("%d", &data);
-	node* newNode = (node *) malloc(sizeof(node));
-	newNode -> info = data;
-
-	fputs("Enter position: ", stdout);
-	scanf("%d", &pos);
-	node* ptr;
-	newNode -> prev = newNode -> next = NULL;
-	for(i = 0; i < pos -1; ++i)
-	{
-		ptr = ptr -> next;
-		if(ptr == NULL)
-			printf("\nNo nodes\n");
-	}
-	newNode -> next = ptr -> next;
-	newNode -> prev = ptr;
-	ptr -> next -> prev = newNode;
-	ptr -> next = newNode;
-}
-
-void del_b()
-{
-	if(head == NULL)
-	{
-		printf("\nNo nodes!!!!\n\n");
-		return;
-	}
-	node* ptr;
-	ptr = head;
-
-	head = head -> next;
-
-	head -> prev = NULL;
-
-	free(ptr);
-}
-
-void del_e()
-{
-	node* ptr;
-	if(head == NULL)
-	{
-		printf("\nNo nodes!!!!\n\n");
-		return;
-	}
-	if(head -> next == NULL)
-	{
-		ptr = head;
-
-		head = NULL;
-		printf("\nThe deleted item is: %d\n", ptr -> info);
-		free(ptr);
-	}
-	else
-	{
-		ptr = head;
-		while(ptr -> next != NULL)
-		{
-			ptr = ptr -> next;
-		}
-		ptr -> prev -> next = NULL;
-		printf("\nThe deleted item is: %d\n", ptr -> info);
-		free(ptr);
-	}
-}
-
-
-void del_pos()
-{
-	int pos;
-	node* ptr;
-	int i;
-	fputs("Enter position: ", stdout);
-	scanf("%d", &pos);
-	ptr = head;
-	if(head == NULL)
-	{
-		printf("\nNo nodes!!!!\n\n");
-		return;
-	}
-
-
-	else
-	{
-		for(i = 0; i < pos; ++i)
-		{
-			ptr = ptr -> next;
-			if(ptr == NULL)
-			{
-				printf("\nNo nodes!!!!\n\n");
-				return;
-			}
-		}
-		ptr -> prev -> next = ptr -> next;
-		ptr -> next -> prev = ptr -> prev;
-
-		ptr = NULL;
-	}
-}
-
-void traverse()
-{
-	node* ptr;
-	ptr = head;
-	if(head == NULL)
-	{
-		printf("\nThe list is empty\n");
-		return;
-	}
-	else
-	{
-		while(ptr != NULL)
-  		{
-
-  		 		  printf("  %d  ",ptr -> info);
-  		 		  ptr = ptr -> next;
-  		}
-        printf("\n");
-	}
-}
-
-int main(int argc,char **argv)
-{
-	int choice;
-	while(true)
-	{
-		printf("\n1. Insert begining\n2.Insert Position\n3. Insert End\n4. Delete Begining\n5.Delete Position\n6. Delete Pos\n7. Display\n8. Exit\n");
-		scanf("%d", &choice);
-		switch(choice)
-		{
-			case 1:
-				ins_b();
-				break;
-			case 2:
-				ins_pos();
-				break;
-			case 3:
-				ins_e();
-				break;
-			case 4:
-				del_b();
-				break;
-			case 5:
-				del_pos();
-				break;
-			case 6:
-				del_e();
-				break;
-			case 7:
-				traverse();
-				break;
-			case 8:
-				exit(0);
-				break;
+			case 13:
+				wait_for_key = 0;
+			break;
 			default:
-				printf("\nEnter a better choice buddy!!!!\n");
+				wait_for_key = 1;
 		}
 	}
+
+	while(find == 1)
+	{
+		//Traversal of Maze
+		if (getpixel(x+1, y) == maze_color)
+			x=x+1;
+		else if(getpixel(x, y+1) == maze_color)
+			y=y+1;
+		else if(getpixel(x - 1, y) == maze_color)
+			x=x-1;
+		else if(getpixel(x, y-1) == maze_color)
+			y=y-1;
+		else{
+			find = 0;
+			break;
+		}
+
+		status = refresh(x, y);
+		if(status == 2 || status == 13)
+		{
+			break;
+		}
+	}
+}
+
+int main()
+{
+	int gd = DETECT, gm;
+	initgraph(&gd, &gm, "c:\\turboc3\\bgi");
+
+	// Darwing a maze.
+	maze();
+
+	// Trace the solution
+	left_wall_algorithm();
+
+	// Display the solution
+	getch();
+	closegraph();
 	return 0;
 }
