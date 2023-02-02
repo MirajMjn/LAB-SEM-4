@@ -17,68 +17,43 @@ int main()
         exit(1);
     }
 
-    // Taking in teh augumented matrix
+    // Taking in the augumented matrix
     printf("\nEnter Coefficients of Augumented Matrix : \n");
-    for(i = 0; i < n; i++)
-    {
-        for(j = 0; j < n+1; j++)
-        {
+    for(i = 1; i <= n; i++){
+        for(j = 1; j <= n+1; j++){
             printf("\tA[%d][%d]: ", i, j);
             scanf("%f", &a[i][j]);
         }
         printf("\n");
     }
 
-    //rearranging if needed, then performing Gauss Elimination.
-    for(i = 0; i < n; i++)
-    {
-        //rearrange if needed.
-        if(a[i][i] == 0){
-            for(j = 0; j < n+1; j++)
-            {
-                temp = a[i][j];
-                a[i][j] = a[i+1][j];
-                a[i+1][j] = temp;
-            }
-        }
+    if(a[0][0] == 0){
+        printf("\nFirst element of Matrix cannot be zero, please re-enter.");
+        exit(1);
+    }
 
-        //elimination part
-        for(j = i+1; j < n+1; j++)
-        {
-            ratio = a[j][i] / a[i][i];
-            for (k = 0; k < n+1; k++)
-            {
-                a[j][k] = a[j][k] - ratio*a[i][k];
+    for(i = 1; i < n; i++){
+        for(j = i+1; j <= n; j++){
+            ratio = a[j][i]/a[i][i];
+            for(k = 1; k <= n+1; k++){
+                a[j][k] =a[j][k] - ratio * a[i][k];
             }
         }
     }
 
-    printf("\nAfter Elimination.\n");
-    for(i = 0; i < n; i++)
-    {
-        for(j = 0; j < n+1; j++)
-        {
-            printf("\t%.3f", a[i][j]);
-        }
-        printf("\n");
-    }
+    x[n] = a[n][n+1]/a[n][n];
 
-
-    //Backward Subs
-
-    x[n-1] = a[n-1][n]/a[n-1][n-1];
-
-    for(i = n-2 ; i >= 0; i--)
+    for(i = n-1 ; i >= 1; i--)
     {
         x[i] = a[i][n+1];
-        for(j = i+1; j < n; j++)
+        for(j = i+1; j <= n; j++)
         {
             x[i] = x[i] - a[i][j] * x[j];
         }
         x[i] = x[i] / a[i][i];
     }
 
-    for(i = 0; i < n; i++)
+    for(i = 1; i <= n; i++)
     {
         printf("\nx%d = %.3f", i, x[i]);
     }
