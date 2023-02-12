@@ -3,29 +3,35 @@
 #include <stdio.h>
 #include <string.h>
 
-char rev(char string[], int n){
-    if(n == 0){
-        return string[n];
-    }
-    else{
-        return strcat(string[n], rev(string, n-1));
+int checkpalindrome(char string[], int start, int end){
+    if(start >= end){
+        return 1;
+    }else{
+        if(string[start] != string[end]
+            && string[start] != string[end]+32
+            && string[start] != string[end]-32){
+            return 0;
+        }else{
+            checkpalindrome(string, start+1, end-1);
+        }
     }
 }
 
 int main()
 {
-    char string[30], string_rev[30];
-    int n;
+    char input_s[30];
+    int status;
 
     printf("\n Enter a string : ");
-    scanf("%s", string);
+    scanf("%s", input_s);
 
-    n = strlen(string);
+    status = checkpalindrome(input_s, 0, strlen(input_s)-1); // string, start, end
 
-    strcpy(string_rev, rev(string, n));
-
-    printf("\n");
-    puts(string_rev);
+    if(status == 1){
+        printf("\nIt is Palindrome");
+    }else{
+        printf("\nIt is NOT Palindrome");
+    }
 
     return 0;
 }
