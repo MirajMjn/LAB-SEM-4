@@ -65,7 +65,7 @@ float NewtonInterpolation(float xp, int n)
     int i, j;
 
     fill_difference_table(n);
-    //display_difference_table(n);
+    display_difference_table(n);
 
     h = x[1] - x[0];
     p = (xp - x[0]) / h;
