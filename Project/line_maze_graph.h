@@ -48,6 +48,7 @@ int insertNode(int x_coord, int y_coord, char direction, int identifier = 0)
 
     if (head == NULL){
         head = new_node; // first node of graph.
+        status = 2; 
     }else{
         //if a node already exists, traverse to that node,
         //else create node
@@ -62,7 +63,7 @@ int insertNode(int x_coord, int y_coord, char direction, int identifier = 0)
                     head = head->north;
                     head->south = temp;
                     temp->north = head;
-                    status = -1;
+                    status = 1;
                 }else{
                     head->north = new_node;
                     new_node->south = head;
@@ -81,7 +82,7 @@ int insertNode(int x_coord, int y_coord, char direction, int identifier = 0)
                     head = head->west;
                     head->east = temp;
                     temp->west = head;
-                    status = -1;
+                    status = 1;
                 }else{
                     head->west = new_node;
                     new_node->east = head;
@@ -100,7 +101,7 @@ int insertNode(int x_coord, int y_coord, char direction, int identifier = 0)
                     head = head->south;
                     head->north = temp;
                     temp->south = head;
-                    status = -1;
+                    status = 1;
                 }else{
                     head->south = new_node;
                     new_node->north = head;
@@ -119,7 +120,7 @@ int insertNode(int x_coord, int y_coord, char direction, int identifier = 0)
                     head = head->east;
                     head->west = temp;
                     temp->east = head;
-                    status = -1;
+                    status = 1;
                 }else{
                     head->east = new_node;
                     new_node->west = head;
@@ -130,7 +131,7 @@ int insertNode(int x_coord, int y_coord, char direction, int identifier = 0)
 
             default: //in case of unexpected entry.
                 head = head;
-                status = 1; //unexpected entry error.
+                status = 13; //unexpected entry error.
         }
     }
     return status; //indicates new node created.
@@ -188,8 +189,8 @@ int deleteNode(char direction){
 }
 
 //traversal
-node* getNode(){
-
+node getNode(){
+    return head;
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
